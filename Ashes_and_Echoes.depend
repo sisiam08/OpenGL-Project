@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1749216925 source:e:\university\computer graphics\lab\project\ashes_and_echoes\main.cpp
+1749563149 source:e:\university\computer graphics\lab\project\ashes_and_echoes\main.cpp
 	<windows.h>
 	<GL/glut.h>
 	<math.h>
+	<vector>
 
 1301111162 c:\program files (x86)\codeblocks\mingw\include\windows.h
 	<winresrc.h>

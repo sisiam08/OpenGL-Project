@@ -1,11 +1,65 @@
-#include <windows.h> // for MS Windows
-#include <GL/glut.h> // GLUT, include glu.h and gl.h
+#include <windows.h>
+#include <GL/glut.h>
 #include<math.h>
+#include<vector>
 # define PI   3.14159265358979323846
+using namespace std;
+
+//Global variables
+//cloud
+GLfloat cloudPosition = 0.0f;
+GLfloat cloudSpeed = 0.001f;
+
+//Smoke1
+float smoke1Speed = 0.005f;
+
+float minXSmoke1 = -0.374f;
+
+float minYSmoke1 = 0.101f;
+float maxYSmoke1 = 0.472f;
+
+vector<float> XSmoke1 = {-0.374f,-0.338f,-0.316f,-0.298f,-0.260f,-0.210f,-0.215f,-0.247f,-0.292f,-0.288f,-0.406f,-0.438f,-0.471f,-0.521f,-0.540f,-0.537f,-0.572f,-0.619f,-0.677f,-0.726f,-0.765f,-0.769f,-0.741f,-0.709f,-0.665f,-0.618f,-0.595f,-0.417f,-0.434f,-0.429f,-0.403f,-0.357f,-0.397f,-0.356f,-0.330f,-0.338f,-0.259f,-0.308f,-0.255f,-0.206f,-0.236f,-0.315f,-0.452f,-0.500f,-0.694f,-0.600f,-0.569f,-0.277f,-0.248f};
+
+vector<float> YSmoke1 = {0.101f,0.124f,0.162f,0.208f,0.253f,0.259f,0.209f,0.167f,0.134f,0.103f,0.116f,0.149f,0.188f,0.192f,0.220f,0.267f,0.320f,0.349f,0.344f,0.346f,0.325f,0.296f,0.307f,0.309f,0.312f,0.314f,0.276f,0.242f,0.276f,0.272f,0.317f,0.316f,0.356f,0.347f,0.368f,0.423f,0.420f,0.455f,0.472f,0.427f,0.440f,0.411f,0.236f,0.150f,0.326f,0.300f,0.286f,0.182f,0.217f};
+
+vector<float> tempXSmoke1 = {-0.374f,-0.338f,-0.316f,-0.298f,-0.260f,-0.210f,-0.215f,-0.247f,-0.292f,-0.288f,-0.406f,-0.438f,-0.471f,-0.521f,-0.540f,-0.537f,-0.572f,-0.619f,-0.677f,-0.726f,-0.765f,-0.769f,-0.741f,-0.709f,-0.665f,-0.618f,-0.595f,-0.417f,-0.434f,-0.429f,-0.403f,-0.357f,-0.397f,-0.356f,-0.330f,-0.338f,-0.259f,-0.308f,-0.255f,-0.206f,-0.236f,-0.315f,-0.452f,-0.500f,-0.694f,-0.600f,-0.569f,-0.277f,-0.248f};
+
+vector<float> tempYSmoke1 = {0.101f,0.124f,0.162f,0.208f,0.253f,0.259f,0.209f,0.167f,0.134f,0.103f,0.116f,0.149f,0.188f,0.192f,0.220f,0.267f,0.320f,0.349f,0.344f,0.346f,0.325f,0.296f,0.307f,0.309f,0.312f,0.314f,0.276f,0.242f,0.276f,0.272f,0.317f,0.316f,0.356f,0.347f,0.368f,0.423f,0.420f,0.455f,0.472f,0.427f,0.440f,0.411f,0.236f,0.150f,0.326f,0.300f,0.286f,0.182f,0.217f};
+
+//Smoke2
+float smoke2Speed = 0.005f;
+
+float minXSmoke2 = 0.173f;
+
+float minYSmoke2 = 0.07f;
+float maxYSmoke2 = 0.324f;
+
+vector<float> XSmoke2 = {0.173f, 0.207f, 0.239f, 0.278f, 0.246f, 0.301f, 0.295f, 0.335f, 0.307f, 0.376f, 0.362f};
+vector<float> YSmoke2 = {0.098f, 0.144f, 0.166f, 0.197f, 0.220f, 0.235f, 0.253f, 0.270f, 0.298f, 0.294f, 0.324f};
+
+vector<float> tempXSmoke2 = {0.173f, 0.207f, 0.239f, 0.278f, 0.246f, 0.301f, 0.295f, 0.335f, 0.307f, 0.376f, 0.362f};
+vector<float> tempYSmoke2 = {0.098f, 0.144f, 0.166f, 0.197f, 0.220f, 0.235f, 0.253f, 0.270f, 0.298f, 0.294f, 0.324f};
+
+//Building 1 Smoke
+float Building1SmokeSpeed = 0.005f;
+
+float minXBuilding1Smoke = -0.549f;
+
+float minYBuilding1Smoke = 0.143f;
+float maxYBuilding1Smoke = 0.230f;
+
+vector<float> XBuilding1Smoke = {-0.549f,-0.557f,-0.558f,-0.534f,-0.539f,-0.492f,-0.454f,-0.475f,-0.524f,-0.552f};
+vector<float> YBuilding1Smoke = {0.143f,0.165f,0.191f,0.202f,0.128f,0.111f,0.104f,0.071f,0.121f,0.230f};
+
+vector<float> tempXBuilding1Smoke = {-0.549f,-0.557f,-0.558f,-0.534f,-0.539f,-0.492f,-0.454f,-0.475f,-0.524f,-0.552f};
+vector<float> tempYBuilding1Smoke = {0.143f,0.165f,0.191f,0.202f,.128f,0.111f,0.104f,0.071f,0.121f,0.230f};
+
+
+
 
 /* Handler for window-repaint event. Call back when the window first appears and
 whenever the window needs to be re-painted. */
-void renderBitmapString(float x, float y, float z, void *font, char *string) 
+void renderBitmapString(float x, float y, float z, void *font, char *string)
 {
     char *c;
     glRasterPos3f(x, y,z);
@@ -15,7 +69,7 @@ void renderBitmapString(float x, float y, float z, void *font, char *string)
     }
 }
 
-void init() 
+void init()
 {
     glClearColor(0.0, 0.0, 0.0, 1.0); // Black background
     glMatrixMode(GL_PROJECTION);
@@ -24,7 +78,7 @@ void init()
 }
 
 //Circle
-void drawCircle(float x, float y, float radius, int triangleAmount, float r, float g, float b) 
+void drawCircle(float x, float y, float radius, int triangleAmount, float r, float g, float b)
 {
 
 	GLfloat twicePi = 2.0f * PI;
@@ -43,7 +97,7 @@ void drawCircle(float x, float y, float radius, int triangleAmount, float r, flo
 }
 
 //Half Circle
-void drawHalfCircle(float x, float y, float radius, int triangleAmount, float r, float g, float b) 
+void drawHalfCircle(float x, float y, float radius, int triangleAmount, float r, float g, float b)
 {
 
 	glColor3f(r,g,b);
@@ -207,9 +261,9 @@ void drawSun(float sx, float sy, float sradius)
 
     int sunRays = 10;
     float rayInterval = 360/sunRays;
-    
+
     glBegin(GL_LINES);
-    for (int i = 0; i < 360; i += rayInterval) 
+    for (int i = 0; i < 360; i += rayInterval)
     {
         float angle = 2 * PI * i / 360.0;
 
@@ -225,19 +279,6 @@ void drawSun(float sx, float sy, float sradius)
 }
 
 
-//Cloud Animation
-GLfloat cloudPosition = 0.0f;
-GLfloat cloudSpeed = 0.001f;
-
-void updateCloud(int value) 
-{
-    if(cloudPosition >1.0)
-        cloudPosition = -1.0f;
-    cloudPosition = cloudPosition + cloudSpeed;
-    
-	glutPostRedisplay();
-	glutTimerFunc(100, updateCloud, 0);
-}
 //All Clouds
 void drawCloud()
 {
@@ -625,23 +666,23 @@ void drawBuildingInnerBrokenPart(float x, float y)
     glEnd();
 }
 
-//Building 1 smook
-void drawBuilding1Smook()
+//Building 1 Smoke
+void drawBuilding1Smoke()
 {
     float r = 89.0f/255.0f;
     float g = 111.0f/255.0f;
     float b = 72.0f/255.0f;
 
-    drawCircle(-0.549f, 0.143f, 0.011f, 100, r, g, b); //Q
-    drawCircle(-0.557f, 0.165f, 0.017f, 100, r, g, b); //R
-    drawCircle(-0.558f, 0.191f, 0.015f, 100, r, g, b); //S
-    drawCircle(-0.534f, 0.202f, 0.019f, 100, r, g, b); //T
-    drawCircle(-0.539f, 0.128f, 0.012f, 100, r, g, b); //U
-    drawCircle(-0.492f, 0.111f, 0.029f, 100, r, g, b); //V
-    drawCircle(-0.454f, 0.104f, 0.035f, 100, r, g, b); //W
-    drawCircle(-0.475f, 0.071f, 0.016f, 100, r, g, b); //Z
-    drawCircle(-0.524f, 0.121f, 0.009f, 100, r, g, b); //A1
-    drawCircle(-0.552f, 0.230f, 0.026f, 100, r, g, b); //B1
+    drawCircle(XBuilding1Smoke[0], YBuilding1Smoke[0], 0.011f, 100, r, g, b); //Q
+    drawCircle(XBuilding1Smoke[1], YBuilding1Smoke[1], 0.017f, 100, r, g, b); //R
+    drawCircle(XBuilding1Smoke[2], YBuilding1Smoke[2], 0.015f, 100, r, g, b); //S
+    drawCircle(XBuilding1Smoke[3], YBuilding1Smoke[3], 0.019f, 100, r, g, b); //T
+    drawCircle(XBuilding1Smoke[4], YBuilding1Smoke[4], 0.012f, 100, r, g, b); //U
+    drawCircle(XBuilding1Smoke[5], YBuilding1Smoke[5], 0.029f, 100, r, g, b); //V
+    drawCircle(XBuilding1Smoke[6], YBuilding1Smoke[6], 0.035f, 100, r, g, b); //W
+    drawCircle(XBuilding1Smoke[7], YBuilding1Smoke[7], 0.016f, 100, r, g, b); //Z
+    drawCircle(XBuilding1Smoke[8], YBuilding1Smoke[8], 0.009f, 100, r, g, b); //A1
+    drawCircle(XBuilding1Smoke[9], YBuilding1Smoke[9], 0.026f, 100, r, g, b); //B1
 }
 
 //Building
@@ -739,12 +780,12 @@ void drawBuilding1(float x, float y, float r, float g, float b)
     glEnd();
 
 
-    //Smook
+    //Smoke
     glPushMatrix();
     glScalef(1.25f, 1.25f, 1.25f);
     glTranslatef(0.205f, 0.02f, 0.0f);
 
-        drawBuilding1Smook();
+        drawBuilding1Smoke();
 
     glPopMatrix();
 
@@ -1345,7 +1386,7 @@ void drawTree1()
     glVertex2f(-0.868, 0.075);
     glVertex2f(-0.892, 0.075);
     glEnd();
-    
+
     //Tree Leafs
     glColor3f(36.0f/255.0f, 85.0f/255.0f, 19.0f/255.0f);
     glBegin(GL_TRIANGLES);
@@ -1364,7 +1405,7 @@ void drawTree1()
 
 }
 
-void drawTree2() 
+void drawTree2()
 {
     //Tree Shadow
     glPushMatrix();
@@ -1372,9 +1413,9 @@ void drawTree2()
     glTranslatef(0.0f, -0.8f, 0.0f);
 
     drawCircle(-0.881f, -0.342f, 0.075f, 100, 73.0f/255.0f, 109.0f/255.0f, 11.0f/255.0f);
-    
+
     glPopMatrix();
-    
+
     // Tree Leafs
     glColor3f(38.0f/255.0f, 88.0f/255.0f, 15.0f/255.0f);
 
@@ -1435,7 +1476,7 @@ void drawFlowerLeafs()
     glVertex2f(0.506f,-0.388f); //A4
     glVertex2f(0.502f,-0.402f); //K2
     glVertex2f(0.501f,-0.396f); //L2
-    glVertex2f(0.499f,-0.390f); //M2 
+    glVertex2f(0.499f,-0.390f); //M2
     glVertex2f(0.497f,-0.386f); //N2
     glVertex2f(0.496f,-0.381f); //O2
     glVertex2f(0.494f,-0.377f); //P2
@@ -1457,7 +1498,7 @@ void drawFlowerLeafs()
     glVertex2f(0.521f,-0.425f); //P
     glVertex2f(0.505f,-0.415f); //J2
     glVertex2f(0.501f,-0.410f); //I2
-    glVertex2f(0.502f,-0.402f); //K2 
+    glVertex2f(0.502f,-0.402f); //K2
     glEnd();
 
     glBegin(GL_POLYGON);
@@ -1531,7 +1572,7 @@ void drawTree()
     drawTree1();
     glPopMatrix();
 
-    
+
     glPushMatrix();
     glScalef(0.9f, 0.9f, 0.9f);
     glTranslatef(-0.09f, 0.02f, 0.0f);
@@ -1605,13 +1646,13 @@ void drawShrubs()
     glTranslatef(0.725f, 0.007f, 0.0f);
         drawShrub8();
     glPopMatrix();
-    
+
     glPushMatrix();
     glTranslatef(1.5f, -0.018f, 0.0f);
         drawShrub5();
     glPopMatrix();
 
-    
+
 
 }
 
@@ -2385,7 +2426,7 @@ void drawRightSideVerticleFracture()
     glVertex2f(0.952f, -0.143f); //B1
     glVertex2f(0.961f, -0.153f); //C1
     glVertex2f(0.933f, -0.171f); //F1
-    glVertex2f(0.913f, -0.170f); //E1 
+    glVertex2f(0.913f, -0.170f); //E1
     glEnd();
 
     glBegin(GL_POLYGON);
@@ -2409,7 +2450,7 @@ void drawBrokenParticles()
     glVertex2f(-0.770f, -0.370f); //M1
     glEnd();
 
-    
+
     glBegin(GL_POLYGON);
     glVertex2f(-0.515f, -0.399f); //N1
     glVertex2f(-0.494f, -0.380f); //Z1
@@ -2460,7 +2501,7 @@ void drawBrokenParticles()
         glEnd();
     glPopMatrix();
 
-    
+
     glPushMatrix();
     glTranslatef(0.15f, 0.0f, 0.0f);
         glColor3f(87.0f/255.0f, 89.0f/255.0f, 27.0f/255.0f);
@@ -2509,7 +2550,7 @@ void drawBrokenParticles()
         glVertex2f(0.198f, -0.496f); //C5
         glEnd();
     glPopMatrix();
-    
+
 
     glPushMatrix();
     glTranslatef(0.05f, 0.0f, 0.0f);
@@ -2596,9 +2637,9 @@ void drawBrokenParticles()
         glVertex2f(0.435f, -0.210f); //Z10
         glVertex2f(0.380f, -0.200f); //U10
         glVertex2f(0.361f, -0.233f); //V10
-        glVertex2f(0.350f, -0.249f); //W10 
+        glVertex2f(0.350f, -0.249f); //W10
         glEnd();
-    
+
         glBegin(GL_POLYGON);
         glVertex2f(0.623f, -0.239f); //D11
         glVertex2f(0.594f, -0.202f); //E11
@@ -2812,7 +2853,7 @@ void WaringBoard()
     glTranslatef(0.0f, -0.925f, 0.0f);
 
     drawCircle(-0.5695f, -0.399f, 0.05f, 100, 73.0f/255.0f, 109.0f/255.0f, 11.0f/255.0f);
-    
+
     glPopMatrix();
 
     //stand
@@ -2874,7 +2915,7 @@ void WaringBarrier()
     glTranslatef(0.0f, -3.05f, 0.0f);
 
     drawCircle(0.290, -0.417, 0.17f, 100, 73.0f/255.0f, 109.0f/255.0f, 11.0f/255.0f);
-    
+
     glPopMatrix();
 
     //Barrier
@@ -3217,154 +3258,324 @@ void drawHole()
     glEnd();
 }
 
-//House 1 Smook
-void drawHouse1Smook()
+
+
+//House 1 Smoke
+float House1SmokeXposition = 0.0f;
+float House1SmokeYposition = 0.0f;
+float House1SmokeSpeed = 0.005f;
+
+float minXHouse1Smoke = 0.800;
+
+float minYHouse1Smoke = 0.150f;
+float maxYHouse1Smoke = 0.282f;
+
+vector<float> XHouse1Smoke = {0.767f,0.802f,0.844f,0.947f,0.864f,0.954f,0.915f,0.988f};
+vector<float> YHouse1Smoke = {0.135f,0.197f,0.175f,0.182f,0.249f,0.281f,0.231f,0.227f};
+
+vector<float> tempXHouse1Smoke = {0.767f,0.802f,0.844f,0.947f,0.864f,0.954f,0.915f,0.988f};
+vector<float> tempYHouse1Smoke = {0.135f,0.197f,0.175f,0.182f,0.249f,0.281f,0.231f,0.227f};
+
+//House 1 Smoke
+void drawHouse1Smoke()
 {
     float r = 89.0f/255.0f;
     float g = 111.0f/255.0f;
     float b = 72.0f/255.0f;
 
-    drawCircle(0.767,0.135,0.036, 100, r, g, b); //S
-    drawCircle(0.802,0.197,0.051, 100, r, g, b); //U
-    drawCircle(0.844,0.175,0.052, 100, r, g, b); //V
-    drawCircle(0.947,0.182,0.057, 100, r, g, b); //W
-    drawCircle(0.864,0.249,0.048, 100, r, g, b); //Z
-    drawCircle(0.954,0.281,0.059, 100, r, g, b); //A1
-    drawCircle(0.915,0.231,0.050, 100, r, g, b); //B1
-    drawCircle(0.988,0.227,0.032, 100, r, g, b); //C1
+    drawCircle(XHouse1Smoke[0], YHouse1Smoke[0], 0.036f, 100, r, g, b); //S
+    drawCircle(XHouse1Smoke[1], YHouse1Smoke[1], 0.051f, 100, r, g, b); //U
+    drawCircle(XHouse1Smoke[2], YHouse1Smoke[2], 0.052f, 100, r, g, b); //V
+    drawCircle(XHouse1Smoke[3], YHouse1Smoke[3], 0.057f, 100, r, g, b); //W
+    drawCircle(XHouse1Smoke[4], YHouse1Smoke[4], 0.048f, 100, r, g, b); //Z
+    drawCircle(XHouse1Smoke[5], YHouse1Smoke[5], 0.059f, 100, r, g, b); //A1
+    drawCircle(XHouse1Smoke[6], YHouse1Smoke[6], 0.050f, 100, r, g, b); //B1
+    drawCircle(XHouse1Smoke[7], YHouse1Smoke[7], 0.032f, 100, r, g, b); //C1
 
-    glBegin(GL_POLYGON);
-    glVertex2f(0.753,0.105); //T
-    glVertex2f(0.719,0.066); //D1
-    glVertex2f(0.718,0.074); //E1
-    glVertex2f(0.718,0.082); //F1
-    glVertex2f(0.719,0.088); //G1
-    glVertex2f(0.721,0.095); //H1
-    glVertex2f(0.726,0.102); //I1
-    glVertex2f(0.730,0.107); //J1
-    glVertex2f(0.735,0.111); //K1
-    glVertex2f(0.739,0.114); //L1
-    glVertex2f(0.797,0.144); //M1
-    glVertex2f(0.815,0.138); //N1
-    glVertex2f(0.814,0.131); //Z1
-    glVertex2f(0.810,0.131); //A2
-    glVertex2f(0.811,0.131); //B2
-    glVertex2f(0.809,0.129); //C2
-    glVertex2f(0.807,0.128); //D2
-    glVertex2f(0.805,0.127); //E2
-    glVertex2f(0.804,0.125); //F2
-    glVertex2f(0.802,0.122); //G2
-    glVertex2f(0.801,0.119); //H2 
-    glVertex2f(0.799,0.116); //I2
-    glVertex2f(0.798,0.112); //J2
-    glVertex2f(0.797,0.108); //K2
-    glVertex2f(0.795,0.104); //L2
-    glVertex2f(0.793,0.101); //M2
-    glVertex2f(0.791,0.097); //N2
-    glVertex2f(0.788,0.092); //O2
-    glVertex2f(0.784,0.092); //P2
-    glVertex2f(0.780,0.090); //Q2
-    glVertex2f(0.775,0.088); //S2
-    glVertex2f(0.769,0.086); //T2
-    glVertex2f(0.761,0.086); //U2
-    glVertex2f(0.758,0.085); //V2 
-    glVertex2f(0.753,0.084); //W2
-    glVertex2f(0.747,0.082); //Z2
-    glVertex2f(0.743,0.080); //A3
-    glVertex2f(0.738,0.077); //B3
-    glVertex2f(0.733,0.074); //C3
-    glVertex2f(0.729,0.071); //D3
-    glVertex2f(0.726,0.070); //E3
-    glVertex2f(0.723,0.068); //F3
-    glVertex2f(0.719,0.066); //D1
-
-    glEnd();
+    glPushMatrix();
+    glTranslatef(House1SmokeXposition, House1SmokeYposition, 0.0f);
+        glBegin(GL_POLYGON);
+        glVertex2f(0.753f, 0.105f); //T
+        glVertex2f(0.719f, 0.066f); //D1
+        glVertex2f(0.718f, 0.074f); //E1
+        glVertex2f(0.718f, 0.082f); //F1
+        glVertex2f(0.719f, 0.088f); //G1
+        glVertex2f(0.721f, 0.095f); //H1
+        glVertex2f(0.726f, 0.102f); //I1
+        glVertex2f(0.730f, 0.107f); //J1
+        glVertex2f(0.735f, 0.111f); //K1
+        glVertex2f(0.739f, 0.114f); //L1
+        glVertex2f(0.797f, 0.144f); //M1
+        glVertex2f(0.815f, 0.138f); //N1
+        glVertex2f(0.814f, 0.131f); //Z1
+        glVertex2f(0.810f, 0.131f); //A2
+        glVertex2f(0.811f, 0.131f); //B2
+        glVertex2f(0.809f, 0.129f); //C2
+        glVertex2f(0.807f, 0.128f); //D2
+        glVertex2f(0.805f, 0.127f); //E2
+        glVertex2f(0.804f, 0.125f); //F2
+        glVertex2f(0.802f, 0.122f); //G2
+        glVertex2f(0.801f, 0.119f); //H2
+        glVertex2f(0.799f, 0.116f); //I2
+        glVertex2f(0.798f, 0.112f); //J2
+        glVertex2f(0.797f, 0.108f); //K2
+        glVertex2f(0.795f, 0.104f); //L2
+        glVertex2f(0.793f, 0.101f); //M2
+        glVertex2f(0.791f, 0.097f); //N2
+        glVertex2f(0.788f, 0.092f); //O2
+        glVertex2f(0.784f, 0.092f); //P2
+        glVertex2f(0.780f, 0.090f); //Q2
+        glVertex2f(0.775f, 0.088f); //S2
+        glVertex2f(0.769f, 0.086f); //T2
+        glVertex2f(0.761f, 0.086f); //U2
+        glVertex2f(0.758f, 0.085f); //V2
+        glVertex2f(0.753f, 0.084f); //W2
+        glVertex2f(0.747f, 0.082f); //Z2
+        glVertex2f(0.743f, 0.080f); //A3
+        glVertex2f(0.738f, 0.077f); //B3
+        glVertex2f(0.733f, 0.074f); //C3
+        glVertex2f(0.729f, 0.071f); //D3
+        glVertex2f(0.726f, 0.070f); //E3
+        glVertex2f(0.723f, 0.068f); //F3
+        glVertex2f(0.719f, 0.066f); //D1
+        glEnd();
+    glPopMatrix();
 
 
 }
 
-//Smook
-void drawSmook1()
+//Smoke
+void drawSmoke1()
 {
     float r = 89.0f/255.0f;
     float g = 111.0f/255.0f;
     float b = 72.0f/255.0f;
 
-    drawCircle(-0.374f, 0.101f, 0.019f, 100, r, g, b); //O
-    drawCircle(-0.338f, 0.124f, 0.026f, 100, r, g, b); //P
-    drawCircle(-0.316f, 0.162f, 0.023f, 100, r, g, b); //Q
-    drawCircle(-0.298f, 0.208f, 0.027f, 100, r, g, b); //R
-    drawCircle(-0.260f, 0.253f, 0.032f, 100, r, g, b); //S
-    drawCircle(-0.210f, 0.259f, 0.028f, 100, r, g, b); //T
-    drawCircle(-0.215f, 0.209f, 0.030f, 100, r, g, b); //U
-    drawCircle(-0.247f, 0.167f, 0.031f, 100, r, g, b); //V
-    drawCircle(-0.292f, 0.134f, 0.028f, 100, r, g, b); //W
-    drawCircle(-0.288f, 0.103f, 0.029f, 100, r, g, b); //Z
-    drawCircle(-0.406f, 0.116f, 0.021f, 100, r, g, b); //A1
-    drawCircle(-0.438f, 0.149f, 0.027f, 100, r, g, b); //B1
-    drawCircle(-0.471f, 0.188f, 0.035f, 100, r, g, b); //C1
-    drawCircle(-0.521f, 0.192f, 0.018f, 100, r, g, b); //D1
-    drawCircle(-0.540f, 0.220f, 0.023f, 100, r, g, b); //E1
-    drawCircle(-0.537f, 0.267f, 0.035f, 100, r, g, b); //F1
-    drawCircle(-0.572f, 0.320f, 0.031f, 100, r, g, b); //I1
-    drawCircle(-0.619f, 0.349f, 0.040f, 100, r, g, b); //J1
-    drawCircle(-0.677f, 0.344f, 0.022f, 100, r, g, b); //K1
-    drawCircle(-0.726f, 0.346f, 0.030f, 100, r, g, b); //L1
-    drawCircle(-0.765f, 0.325f, 0.021f, 100, r, g, b); //M1
-    drawCircle(-0.769f, 0.296f, 0.024f, 100, r, g, b); //N1
-    drawCircle(-0.741f, 0.307f, 0.016f, 100, r, g, b); //Z1
-    drawCircle(-0.709f, 0.309f, 0.020f, 100, r, g, b); //A2
-    drawCircle(-0.665f, 0.312f, 0.025f, 100, r, g, b); //B2
-    drawCircle(-0.618f, 0.314f, 0.022f, 100, r, g, b); //C2
-    drawCircle(-0.595f, 0.276f, 0.025f, 100, r, g, b); //D2
-    drawCircle(-0.417f, 0.242f, 0.023f, 100, r, g, b); //E2
-    drawCircle(-0.434f, 0.276f, 0.028f, 100, r, g, b); //F2
-    drawCircle(-0.429f, 0.272f, 0.019f, 100, r, g, b); //G2
-    drawCircle(-0.403f, 0.317f, 0.031f, 100, r, g, b); //H2
-    drawCircle(-0.357f, 0.316f, 0.032f, 100, r, g, b); //I2
-    drawCircle(-0.397f, 0.356f, 0.026f, 100, r, g, b); //J2
-    drawCircle(-0.356f, 0.347f, 0.028f, 100, r, g, b); //K2
-    drawCircle(-0.330f, 0.368f, 0.030f, 100, r, g, b); //L2
-    drawCircle(-0.338f, 0.423f, 0.030f, 100, r, g, b); //M2
-    drawCircle(-0.259f, 0.420f, 0.041f, 100, r, g, b); //N2
-    drawCircle(-0.308f, 0.455f, 0.031f, 100, r, g, b); //O2
-    drawCircle(-0.255f, 0.472f, 0.032f, 100, r, g, b); //P2
-    drawCircle(-0.206f, 0.427f, 0.024f, 100, r, g, b); //Q2
-    drawCircle(-0.236f, 0.440f, 0.023f, 100, r, g, b); //S2
-    drawCircle(-0.315f, 0.411f, 0.023f, 100, r, g, b); //T2
-    drawCircle(-0.452f, 0.236f, 0.022f, 100, r, g, b); //U2
-    drawCircle(-0.500f, 0.150f, 0.039f, 100, r, g, b); //V2
-    drawCircle(-0.694f, 0.326f, 0.014f, 100, r, g, b); //W2
-    drawCircle(-0.600f, 0.300f, 0.008f, 100, r, g, b); //Z2
-    drawCircle(-0.569f, 0.286f, 0.012f, 100, r, g, b); //A3
-    drawCircle(-0.277f, 0.182f, 0.032f, 100, r, g, b); //B3
-    drawCircle(-0.248f, 0.217f, 0.033f, 100, r, g, b); //C3
-    
+    drawCircle(XSmoke1[0] , YSmoke1[0] , 0.019f, 100, r, g, b); //O
+    drawCircle(XSmoke1[1] , YSmoke1[1] , 0.026f, 100, r, g, b); //P
+    drawCircle(XSmoke1[2] , YSmoke1[2] , 0.023f, 100, r, g, b); //Q
+    drawCircle(XSmoke1[3] , YSmoke1[3] , 0.027f, 100, r, g, b); //R
+    drawCircle(XSmoke1[4] , YSmoke1[4] , 0.032f, 100, r, g, b); //S
+    drawCircle(XSmoke1[5] , YSmoke1[5] , 0.028f, 100, r, g, b); //T
+    drawCircle(XSmoke1[6] , YSmoke1[6] , 0.030f, 100, r, g, b); //U
+    drawCircle(XSmoke1[7] , YSmoke1[7] , 0.031f, 100, r, g, b); //V
+    drawCircle(XSmoke1[8] , YSmoke1[8] , 0.028f, 100, r, g, b); //W
+    drawCircle(XSmoke1[9] , YSmoke1[9] , 0.029f, 100, r, g, b); //Z
+    drawCircle(XSmoke1[10], YSmoke1[10], 0.021f, 100, r, g, b); //A1
+    drawCircle(XSmoke1[11], YSmoke1[11], 0.027f, 100, r, g, b); //B1
+    drawCircle(XSmoke1[12], YSmoke1[12], 0.035f, 100, r, g, b); //C1
+    drawCircle(XSmoke1[13], YSmoke1[13], 0.018f, 100, r, g, b); //D1
+    drawCircle(XSmoke1[14], YSmoke1[14], 0.023f, 100, r, g, b); //E1
+    drawCircle(XSmoke1[15], YSmoke1[15], 0.035f, 100, r, g, b); //F1
+    drawCircle(XSmoke1[16], YSmoke1[16], 0.031f, 100, r, g, b); //I1
+    drawCircle(XSmoke1[17], YSmoke1[17], 0.040f, 100, r, g, b); //J1
+    drawCircle(XSmoke1[18], YSmoke1[18], 0.022f, 100, r, g, b); //K1
+    drawCircle(XSmoke1[19], YSmoke1[19], 0.030f, 100, r, g, b); //L1
+    drawCircle(XSmoke1[20], YSmoke1[20], 0.021f, 100, r, g, b); //M1
+    drawCircle(XSmoke1[21], YSmoke1[21], 0.024f, 100, r, g, b); //N1
+    drawCircle(XSmoke1[22], YSmoke1[22], 0.016f, 100, r, g, b); //Z1
+    drawCircle(XSmoke1[23], YSmoke1[23], 0.020f, 100, r, g, b); //A2
+    drawCircle(XSmoke1[24], YSmoke1[24], 0.025f, 100, r, g, b); //B2
+    drawCircle(XSmoke1[25], YSmoke1[25], 0.022f, 100, r, g, b); //C2
+    drawCircle(XSmoke1[26], YSmoke1[26], 0.025f, 100, r, g, b); //D2
+    drawCircle(XSmoke1[27], YSmoke1[27], 0.023f, 100, r, g, b); //E2
+    drawCircle(XSmoke1[28], YSmoke1[28], 0.028f, 100, r, g, b); //F2
+    drawCircle(XSmoke1[29], YSmoke1[29], 0.019f, 100, r, g, b); //G2
+    drawCircle(XSmoke1[30], YSmoke1[30], 0.031f, 100, r, g, b); //H2
+    drawCircle(XSmoke1[31], YSmoke1[31], 0.032f, 100, r, g, b); //I2
+    drawCircle(XSmoke1[32], YSmoke1[32], 0.026f, 100, r, g, b); //J2
+    drawCircle(XSmoke1[33], YSmoke1[33], 0.028f, 100, r, g, b); //K2
+    drawCircle(XSmoke1[34], YSmoke1[34], 0.030f, 100, r, g, b); //L2
+    drawCircle(XSmoke1[35], YSmoke1[35], 0.030f, 100, r, g, b); //M2
+    drawCircle(XSmoke1[36], YSmoke1[36], 0.041f, 100, r, g, b); //N2
+    drawCircle(XSmoke1[37], YSmoke1[37], 0.031f, 100, r, g, b); //O2
+    drawCircle(XSmoke1[38], YSmoke1[38], 0.032f, 100, r, g, b); //P2
+    drawCircle(XSmoke1[39], YSmoke1[39], 0.024f, 100, r, g, b); //Q2
+    drawCircle(XSmoke1[40], YSmoke1[40], 0.023f, 100, r, g, b); //S2
+    drawCircle(XSmoke1[41], YSmoke1[41], 0.023f, 100, r, g, b); //T2
+    drawCircle(XSmoke1[42], YSmoke1[42], 0.022f, 100, r, g, b); //U2
+    drawCircle(XSmoke1[43], YSmoke1[43], 0.039f, 100, r, g, b); //V2
+    drawCircle(XSmoke1[44], YSmoke1[44], 0.014f, 100, r, g, b); //W2
+    drawCircle(XSmoke1[45], YSmoke1[45], 0.008f, 100, r, g, b); //Z2
+    drawCircle(XSmoke1[46], YSmoke1[46], 0.012f, 100, r, g, b); //A3
+    drawCircle(XSmoke1[47], YSmoke1[47], 0.032f, 100, r, g, b); //B3
+    drawCircle(XSmoke1[48], YSmoke1[48], 0.033f, 100, r, g, b); //C3
+
 }
 
-void drawSmook2()
+void drawSmoke2()
 {
     float r = 89.0f/255.0f;
     float g = 111.0f/255.0f;
     float b = 72.0f/255.0f;
 
-    drawCircle(0.173f, 0.098f, 0.029f, 100, r, g, b); //G3
-    drawCircle(0.207f, 0.144f, 0.030f, 100, r, g, b); //H3
-    drawCircle(0.239f, 0.166f, 0.027f, 100, r, g, b); //I3
-    drawCircle(0.278f, 0.197f, 0.034f, 100, r, g, b); //J3
-    drawCircle(0.246f, 0.220f, 0.037f, 100, r, g, b); //K3
-    drawCircle(0.301f, 0.235f, 0.022f, 100, r, g, b); //L3
-    drawCircle(0.295f, 0.253f, 0.025f, 100, r, g, b); //M3
-    drawCircle(0.335f, 0.270f, 0.027f, 100, r, g, b); //N3
-    drawCircle(0.307f, 0.298f, 0.027f, 100, r, g, b); //O3
-    drawCircle(0.376f, 0.294f, 0.025f, 100, r, g, b); //P3
-    drawCircle(0.362f, 0.324f, 0.038f, 100, r, g, b); //Q3
     
-    
+    drawCircle(XSmoke2[0] , YSmoke2[0] , 0.029f, 100, r, g, b); //G3
+    drawCircle(XSmoke2[1] , YSmoke2[1] , 0.030f, 100, r, g, b); //H3
+    drawCircle(XSmoke2[2] , YSmoke2[2] , 0.027f, 100, r, g, b); //I3
+    drawCircle(XSmoke2[3] , YSmoke2[3] , 0.034f, 100, r, g, b); //J3
+    drawCircle(XSmoke2[4] , YSmoke2[4] , 0.037f, 100, r, g, b); //K3
+    drawCircle(XSmoke2[5] , YSmoke2[5] , 0.022f, 100, r, g, b); //L3
+    drawCircle(XSmoke2[6] , YSmoke2[6] , 0.025f, 100, r, g, b); //M3
+    drawCircle(XSmoke2[7] , YSmoke2[7] , 0.027f, 100, r, g, b); //N3
+    drawCircle(XSmoke2[8] , YSmoke2[8] , 0.027f, 100, r, g, b); //O3
+    drawCircle(XSmoke2[9] , YSmoke2[9] , 0.025f, 100, r, g, b); //P3
+    drawCircle(XSmoke2[10], YSmoke2[10], 0.038f, 100, r, g, b); //Q3
 }
 
 
-void display() 
+void update(int value)
+{
+
+    //cloud
+    if(cloudPosition > 1.0)
+        cloudPosition = -1.0f;
+    cloudPosition += cloudSpeed;
+
+
+
+    //Building 1 Smoke
+    bool flagBuilding1Smoke = false;
+    for(int i=0; i<YBuilding1Smoke.size(); i++)
+    {
+        if(YBuilding1Smoke[i]>maxYBuilding1Smoke)
+        {
+            XBuilding1Smoke[i]=minXBuilding1Smoke;
+            YBuilding1Smoke[i]=minYBuilding1Smoke;
+            flagBuilding1Smoke = true;
+        }
+        else
+        {
+            if(flagBuilding1Smoke)
+            {
+                float dx = tempXBuilding1Smoke[i] - XBuilding1Smoke[i];
+                float dy = tempYBuilding1Smoke[i] - YBuilding1Smoke[i];
+
+                float dist = sqrt(dx*dx + dy*dy);
+
+                XBuilding1Smoke[i] += Building1SmokeSpeed * dx / dist;
+                YBuilding1Smoke[i] += Building1SmokeSpeed * dy / dist;
+            }
+
+            XBuilding1Smoke[i]+=Building1SmokeSpeed;
+            YBuilding1Smoke[i]+=Building1SmokeSpeed;
+            
+        }
+    }
+
+
+	//smoke1
+    bool flagSmoke1 = false;
+    for(int i=0; i<YSmoke1.size(); i++)
+    {
+        if(YSmoke1[i]>maxYSmoke1)
+        {
+            XSmoke1[i]=minXSmoke1;
+            YSmoke1[i]=minYSmoke1;
+            flagSmoke1 = true;
+        }
+        else
+        {
+            if(flagSmoke1)
+            {
+                float dx = tempXSmoke1[i] - XSmoke1[i];
+                float dy = tempYSmoke1[i] - YSmoke1[i];
+
+                float dist = sqrt(dx*dx + dy*dy);
+
+                XSmoke1[i] += smoke1Speed * dx / dist;
+                YSmoke1[i] += smoke1Speed * dy / dist;
+            }
+
+            XSmoke1[i]+=smoke1Speed;
+            YSmoke1[i]+=smoke1Speed;
+            
+        }
+    }
+
+
+    //smoke2
+    bool flagSmoke2 = false;
+    for(int i=0; i<YSmoke2.size(); i++)
+    {
+        if(YSmoke2[i]>maxYSmoke2)
+        {
+            XSmoke2[i]=minXSmoke2;
+            YSmoke2[i]=minYSmoke2;
+            flagSmoke2 = true;
+        }
+        else
+        {
+            if(flagSmoke2)
+            {
+                float dx = tempXSmoke2[i] - XSmoke2[i];
+                float dy = tempYSmoke2[i] - YSmoke2[i];
+
+                float dist = sqrt(dx*dx + dy*dy);
+
+                XSmoke2[i] += smoke2Speed * dx / dist;
+                YSmoke2[i] += smoke2Speed * dy / dist;
+            }
+
+            XSmoke2[i]+=smoke2Speed;
+            YSmoke2[i]+=smoke2Speed;
+            
+        }
+    }
+
+
+    //House 1 Smoke
+    // if(House1SmokeYposition > 0.144f)
+    // {
+    //     House1SmokeXposition = 0.0f;
+    //     House1SmokeYposition = 0.0f;
+    // }
+    
+    // House1SmokeXposition += House1SmokeSpeed;
+    // House1SmokeYposition += House1SmokeSpeed;
+
+    // //max
+    // //0.797f, 0.144f
+    // //min
+    // //0.719f, 0.066f
+
+    // bool flagHouse1Smoke = false;
+    // for(int i=0; i<YHouse1Smoke.size(); i++)
+    // {
+    //     if(YHouse1Smoke[i]>maxYHouse1Smoke)
+    //     {
+    //         XHouse1Smoke[i]=minXHouse1Smoke;
+    //         YHouse1Smoke[i]=minYHouse1Smoke;
+    //         flagHouse1Smoke = true;
+    //     }
+    //     else
+    //     {
+    //         if(flagHouse1Smoke)
+    //         {
+    //             float dx = tempXHouse1Smoke[i] - XHouse1Smoke[i];
+    //             float dy = tempYHouse1Smoke[i] - YHouse1Smoke[i];
+
+    //             float dist = sqrt(dx*dx + dy*dy);
+
+    //             XHouse1Smoke[i] += House1SmokeSpeed * dx / dist;
+    //             YHouse1Smoke[i] += House1SmokeSpeed * dy / dist;
+    //         }
+
+    //         XHouse1Smoke[i]+=House1SmokeSpeed;
+    //         YHouse1Smoke[i]+=House1SmokeSpeed;
+            
+    //     }
+    // }
+
+
+
+	glutPostRedisplay();
+	glutTimerFunc(100, update, 0);
+
+
+}
+
+void display()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
     glClear(GL_COLOR_BUFFER_BIT); // Clear the color buffer (background)
@@ -3389,13 +3600,18 @@ void display()
 
     drawShrub2();
 
-    drawSmook1();
+    drawSmoke1();
 
-    drawSmook2();
+    drawSmoke2();
+
+    glPushMatrix();
+    glTranslatef(1.38f, 0.01f, 0.0f);
+        drawBuilding1Smoke();
+    glPopMatrix();
 
     drawBuildings();
 
-    drawHouse1Smook();
+    // drawHouse1Smoke();
 
     drawCrackedRoad();
 
@@ -3405,7 +3621,7 @@ void display()
 
     drawGroundCorner();
 
-    drawBrokenParticles();  
+    drawBrokenParticles();
 
     drawRightSideVerticleFracture();
 
@@ -3414,6 +3630,7 @@ void display()
     WaringBarrier();
 
     drawShrubs();
+
 
 
 
@@ -3430,7 +3647,7 @@ int main(int argc, char** argv)
     init();
     glutDisplayFunc(display); // Register display callback handler for window re-paint
     glutIdleFunc(display);
-	glutTimerFunc(100, updateCloud, 0);
+	glutTimerFunc(100, update, 0);
     glutMainLoop(); // Enter the event-processing loop
     return 0;
 }
