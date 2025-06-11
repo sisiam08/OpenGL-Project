@@ -34,11 +34,11 @@ float minXSmoke2 = 0.173f;
 float minYSmoke2 = 0.07f;
 float maxYSmoke2 = 0.324f;
 
-vector<float> XSmoke2 = {0.173f, 0.207f, 0.239f, 0.278f, 0.246f, 0.301f, 0.295f, 0.335f, 0.307f, 0.376f, 0.362f};
-vector<float> YSmoke2 = {0.098f, 0.144f, 0.166f, 0.197f, 0.220f, 0.235f, 0.253f, 0.270f, 0.298f, 0.294f, 0.324f};
+vector<float> XSmoke2 = {0.173f, 0.207f, 0.239f, 0.278f, 0.246f, 0.301f, 0.295f, 0.335f, 0.307f, 0.376f, 0.362f, 0.177f, 0.270f, 0.266f, 0.217f, 0.328f, 0.317f};
+vector<float> YSmoke2 = {0.098f, 0.144f, 0.166f, 0.197f, 0.220f, 0.235f, 0.253f, 0.270f, 0.298f, 0.294f, 0.324f, 0.127f, 0.159f, 0.257f, 0.183f, 0.239f, 0.330f};
 
-vector<float> tempXSmoke2 = {0.173f, 0.207f, 0.239f, 0.278f, 0.246f, 0.301f, 0.295f, 0.335f, 0.307f, 0.376f, 0.362f};
-vector<float> tempYSmoke2 = {0.098f, 0.144f, 0.166f, 0.197f, 0.220f, 0.235f, 0.253f, 0.270f, 0.298f, 0.294f, 0.324f};
+vector<float> tempXSmoke2 = {0.173f, 0.207f, 0.239f, 0.278f, 0.246f, 0.301f, 0.295f, 0.335f, 0.307f, 0.376f, 0.362f, 0.177f, 0.270f, 0.266f, 0.217f, 0.328f, 0.317f};
+vector<float> tempYSmoke2 = {0.098f, 0.144f, 0.166f, 0.197f, 0.220f, 0.235f, 0.253f, 0.270f, 0.298f, 0.294f, 0.324f, 0.127f, 0.159f, 0.257f, 0.183f, 0.239f, 0.330f};
 
 //Building 1 Smoke
 float Building1SmokeSpeed = 0.005f;
@@ -53,6 +53,8 @@ vector<float> YBuilding1Smoke = {0.143f,0.165f,0.191f,0.202f,0.128f,0.111f,0.104
 
 vector<float> tempXBuilding1Smoke = {-0.549f,-0.557f,-0.558f,-0.534f,-0.539f,-0.492f,-0.454f,-0.475f,-0.524f,-0.552f};
 vector<float> tempYBuilding1Smoke = {0.143f,0.165f,0.191f,0.202f,.128f,0.111f,0.104f,0.071f,0.121f,0.230f};
+
+
 
 
 
@@ -248,10 +250,6 @@ void drawHill()
 {
     drawWave(2.5f, 0.12f, 0.6f, 93.0f/255.0f, 130.0f/255.0f, 13.0f/255.0f);
     drawWave(3.0f, 0.19f, 0.2f, 97.0f/255.0f, 135.0f/255.0f, 14.0f/255.0f);
-
-
-    //drawWave(3.0f, 0.12f, 0.6f, 95.0/255.0f, 120.0/255.0f, 50.0/255.0f);
-    //drawWave(3.0f, 0.19f, 0.2f, 95.0/255.0f, 132.0/255.0f, 14.0/255.0f);
 }
 
 //Sun
@@ -269,8 +267,8 @@ void drawSun(float sx, float sy, float sradius)
 
         float x1 = sx + (sradius + 0.01) * cos(angle);
         float y1 = sy + (sradius + 0.01) * sin(angle);
-        float x2 = sx + (sradius + 0.09) * cos(angle);
-        float y2 = sy + (sradius + 0.09) * sin(angle);
+        float x2 = sx + (sradius + 0.08) * cos(angle);
+        float y2 = sy + (sradius + 0.08) * sin(angle);
 
         glVertex2f(x1, y1);
         glVertex2f(x2, y2);
@@ -3421,7 +3419,23 @@ void drawSmoke2()
     drawCircle(XSmoke2[8] , YSmoke2[8] , 0.027f, 100, r, g, b); //O3
     drawCircle(XSmoke2[9] , YSmoke2[9] , 0.025f, 100, r, g, b); //P3
     drawCircle(XSmoke2[10], YSmoke2[10], 0.038f, 100, r, g, b); //Q3
+    drawCircle(XSmoke2[10], YSmoke2[10], 0.011f, 100, r, g, b); //R3
+    drawCircle(XSmoke2[10], YSmoke2[10], 0.008f, 100, r, g, b); //S3
+    drawCircle(XSmoke2[10], YSmoke2[10], 0.010f, 100, r, g, b); //T3
+    drawCircle(XSmoke2[10], YSmoke2[10], 0.017f, 100, r, g, b); //U3
+    drawCircle(XSmoke2[10], YSmoke2[10], 0.012f, 100, r, g, b); //V3
+    drawCircle(XSmoke2[10], YSmoke2[10], 0.010f, 100, r, g, b); //W3
+
+
 }
+
+
+void sound()
+{
+    PlaySound("fire.wav", NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
+    // PlaySound("smoking.wav", NULL, SND_ASYNC|SND_FILENAME|SND_LOOP);
+}
+
 
 
 void update(int value)
@@ -3431,7 +3445,6 @@ void update(int value)
     if(cloudPosition > 1.0)
         cloudPosition = -1.0f;
     cloudPosition += cloudSpeed;
-
 
 
     //Building 1 Smoke
@@ -3523,51 +3536,7 @@ void update(int value)
         }
     }
 
-
-    //House 1 Smoke
-    // if(House1SmokeYposition > 0.144f)
-    // {
-    //     House1SmokeXposition = 0.0f;
-    //     House1SmokeYposition = 0.0f;
-    // }
     
-    // House1SmokeXposition += House1SmokeSpeed;
-    // House1SmokeYposition += House1SmokeSpeed;
-
-    // //max
-    // //0.797f, 0.144f
-    // //min
-    // //0.719f, 0.066f
-
-    // bool flagHouse1Smoke = false;
-    // for(int i=0; i<YHouse1Smoke.size(); i++)
-    // {
-    //     if(YHouse1Smoke[i]>maxYHouse1Smoke)
-    //     {
-    //         XHouse1Smoke[i]=minXHouse1Smoke;
-    //         YHouse1Smoke[i]=minYHouse1Smoke;
-    //         flagHouse1Smoke = true;
-    //     }
-    //     else
-    //     {
-    //         if(flagHouse1Smoke)
-    //         {
-    //             float dx = tempXHouse1Smoke[i] - XHouse1Smoke[i];
-    //             float dy = tempYHouse1Smoke[i] - YHouse1Smoke[i];
-
-    //             float dist = sqrt(dx*dx + dy*dy);
-
-    //             XHouse1Smoke[i] += House1SmokeSpeed * dx / dist;
-    //             YHouse1Smoke[i] += House1SmokeSpeed * dy / dist;
-    //         }
-
-    //         XHouse1Smoke[i]+=House1SmokeSpeed;
-    //         YHouse1Smoke[i]+=House1SmokeSpeed;
-            
-    //     }
-    // }
-
-
 
 	glutPostRedisplay();
 	glutTimerFunc(100, update, 0);
@@ -3582,7 +3551,7 @@ void display()
 
     drawSky();
 
-    drawSun(0.440f, 0.410f, 0.08f);
+    drawSun(0.440f, 0.410f, 0.06f);
 
     drawCloud();
 
@@ -3605,7 +3574,7 @@ void display()
     drawSmoke2();
 
     glPushMatrix();
-    glTranslatef(1.38f, 0.01f, 0.0f);
+    glTranslatef(1.40f, 0.0f, 0.0f);
         drawBuilding1Smoke();
     glPopMatrix();
 
@@ -3647,6 +3616,7 @@ int main(int argc, char** argv)
     init();
     glutDisplayFunc(display); // Register display callback handler for window re-paint
     glutIdleFunc(display);
+    sound();
 	glutTimerFunc(100, update, 0);
     glutMainLoop(); // Enter the event-processing loop
     return 0;
