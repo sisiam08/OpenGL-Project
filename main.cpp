@@ -3407,7 +3407,7 @@ void drawSmoke2()
     float g = 111.0f/255.0f;
     float b = 72.0f/255.0f;
 
-    
+
     drawCircle(XSmoke2[0] , YSmoke2[0] , 0.029f, 100, r, g, b); //G3
     drawCircle(XSmoke2[1] , YSmoke2[1] , 0.030f, 100, r, g, b); //H3
     drawCircle(XSmoke2[2] , YSmoke2[2] , 0.027f, 100, r, g, b); //I3
@@ -3472,7 +3472,7 @@ void update(int value)
 
             XBuilding1Smoke[i]+=Building1SmokeSpeed;
             YBuilding1Smoke[i]+=Building1SmokeSpeed;
-            
+
         }
     }
 
@@ -3502,7 +3502,7 @@ void update(int value)
 
             XSmoke1[i]+=smoke1Speed;
             YSmoke1[i]+=smoke1Speed;
-            
+
         }
     }
 
@@ -3532,17 +3532,23 @@ void update(int value)
 
             XSmoke2[i]+=smoke2Speed;
             YSmoke2[i]+=smoke2Speed;
-            
+
         }
     }
 
-    
+
 
 	glutPostRedisplay();
 	glutTimerFunc(100, update, 0);
 
 
 }
+
+void Idle()
+{
+    glutPostRedisplay();//// marks the current window as needing to be redisplayed
+}
+
 
 void display()
 {
@@ -3606,6 +3612,36 @@ void display()
     glFlush(); // Render now
 }
 
+void SceneInfoDisplay()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
+    glClear(GL_COLOR_BUFFER_BIT); // Clear the color buffer (background)
+
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    renderBitmapString(-0.155f, 0.05f, 0.0f, GLUT_BITMAP_TIMES_ROMAN_24, "Ashes and Echoes");
+    renderBitmapString(-0.17f, -0.05f, 0.0f, GLUT_BITMAP_HELVETICA_18, "Scene 4: Memory Pulse");
+
+
+    glFlush(); // Render now
+
+}
+
+
+void changeDisplay(int key, int x, int y)
+{
+    switch(key)
+    {
+        case GLUT_KEY_RIGHT:
+            glutDisplayFunc(display);
+            sound();
+	        glutTimerFunc(100, update, 0);
+            break;
+    }
+    glutPostRedisplay();
+}
+
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
@@ -3614,10 +3650,10 @@ int main(int argc, char** argv)
     glutInitWindowPosition(80, 50);  // Set the window's initial position according to the monitor
     glutCreateWindow("Ashes and Echoes"); // Create a window with the given title
     init();
-    glutDisplayFunc(display); // Register display callback handler for window re-paint
-    glutIdleFunc(display);
-    sound();
-	glutTimerFunc(100, update, 0);
+    glutDisplayFunc(SceneInfoDisplay); // Register display callback handler for window re-paint
+    glutIdleFunc(Idle);
+    glutSpecialFunc(changeDisplay);
+
     glutMainLoop(); // Enter the event-processing loop
     return 0;
 }
