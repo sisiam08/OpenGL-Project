@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1749634774 source:e:\university\computer graphics\lab\project\ashes_and_echoes\main.cpp
+1749748523 source:e:\university\computer graphics\lab\project\ashes_and_echoes\main.cpp
 	<windows.h>
 	<GL/glut.h>
 	<math.h>

@@ -6,9 +6,17 @@
 using namespace std;
 
 //Global variables
-//cloud
-GLfloat cloudPosition = 0.0f;
-GLfloat cloudSpeed = 0.001f;
+//Left Cloud
+GLfloat LeftCloudPosition = 0.0f;
+GLfloat LeftCloudSpeed = 0.001f;
+
+//Middle Cloud
+GLfloat MiddleCloudPosition = 0.0f;
+GLfloat MiddleCloudSpeed = 0.001f;
+
+//Right Cloud
+GLfloat RightCloudPosition = 0.0f;
+GLfloat RightCloudSpeed = 0.001f;
 
 //Smoke1
 float smoke1Speed = 0.005f;
@@ -267,6 +275,7 @@ void drawSun(float sx, float sy, float sradius)
 
         float x1 = sx + (sradius + 0.01) * cos(angle);
         float y1 = sy + (sradius + 0.01) * sin(angle);
+
         float x2 = sx + (sradius + 0.08) * cos(angle);
         float y2 = sy + (sradius + 0.08) * sin(angle);
 
@@ -281,9 +290,17 @@ void drawSun(float sx, float sy, float sradius)
 void drawCloud()
 {
     glPushMatrix();
-    glTranslatef(cloudPosition, 0.0f, 0.0f);
-        draw_Middle_Cloud(0.0f, 0.46f, 0.042f);
+    glTranslatef(LeftCloudPosition, 0.0f, 0.0f);
         draw_Left_Cloud(-0.7f, 0.48f, 0.048f);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(MiddleCloudPosition, 0.0f, 0.0f);
+        draw_Middle_Cloud(0.0f, 0.46f, 0.042f);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(RightCloudPosition, 0.0f, 0.0f);
         draw_Right_Cloud(0.8f, 0.42f, 0.038f);
     glPopMatrix();
 }
@@ -3259,88 +3276,88 @@ void drawHole()
 
 
 //House 1 Smoke
-float House1SmokeXposition = 0.0f;
-float House1SmokeYposition = 0.0f;
-float House1SmokeSpeed = 0.005f;
+// float House1SmokeXposition = 0.0f;
+// float House1SmokeYposition = 0.0f;
+// float House1SmokeSpeed = 0.005f;
 
-float minXHouse1Smoke = 0.800;
+// float minXHouse1Smoke = 0.800;
 
-float minYHouse1Smoke = 0.150f;
-float maxYHouse1Smoke = 0.282f;
+// float minYHouse1Smoke = 0.150f;
+// float maxYHouse1Smoke = 0.282f;
 
-vector<float> XHouse1Smoke = {0.767f,0.802f,0.844f,0.947f,0.864f,0.954f,0.915f,0.988f};
-vector<float> YHouse1Smoke = {0.135f,0.197f,0.175f,0.182f,0.249f,0.281f,0.231f,0.227f};
+// vector<float> XHouse1Smoke = {0.767f,0.802f,0.844f,0.947f,0.864f,0.954f,0.915f,0.988f};
+// vector<float> YHouse1Smoke = {0.135f,0.197f,0.175f,0.182f,0.249f,0.281f,0.231f,0.227f};
 
-vector<float> tempXHouse1Smoke = {0.767f,0.802f,0.844f,0.947f,0.864f,0.954f,0.915f,0.988f};
-vector<float> tempYHouse1Smoke = {0.135f,0.197f,0.175f,0.182f,0.249f,0.281f,0.231f,0.227f};
+// vector<float> tempXHouse1Smoke = {0.767f,0.802f,0.844f,0.947f,0.864f,0.954f,0.915f,0.988f};
+// vector<float> tempYHouse1Smoke = {0.135f,0.197f,0.175f,0.182f,0.249f,0.281f,0.231f,0.227f};
 
 //House 1 Smoke
-void drawHouse1Smoke()
-{
-    float r = 89.0f/255.0f;
-    float g = 111.0f/255.0f;
-    float b = 72.0f/255.0f;
+// void drawHouse1Smoke()
+// {
+//     float r = 89.0f/255.0f;
+//     float g = 111.0f/255.0f;
+//     float b = 72.0f/255.0f;
 
-    drawCircle(XHouse1Smoke[0], YHouse1Smoke[0], 0.036f, 100, r, g, b); //S
-    drawCircle(XHouse1Smoke[1], YHouse1Smoke[1], 0.051f, 100, r, g, b); //U
-    drawCircle(XHouse1Smoke[2], YHouse1Smoke[2], 0.052f, 100, r, g, b); //V
-    drawCircle(XHouse1Smoke[3], YHouse1Smoke[3], 0.057f, 100, r, g, b); //W
-    drawCircle(XHouse1Smoke[4], YHouse1Smoke[4], 0.048f, 100, r, g, b); //Z
-    drawCircle(XHouse1Smoke[5], YHouse1Smoke[5], 0.059f, 100, r, g, b); //A1
-    drawCircle(XHouse1Smoke[6], YHouse1Smoke[6], 0.050f, 100, r, g, b); //B1
-    drawCircle(XHouse1Smoke[7], YHouse1Smoke[7], 0.032f, 100, r, g, b); //C1
+//     drawCircle(XHouse1Smoke[0], YHouse1Smoke[0], 0.036f, 100, r, g, b); //S
+//     drawCircle(XHouse1Smoke[1], YHouse1Smoke[1], 0.051f, 100, r, g, b); //U
+//     drawCircle(XHouse1Smoke[2], YHouse1Smoke[2], 0.052f, 100, r, g, b); //V
+//     drawCircle(XHouse1Smoke[3], YHouse1Smoke[3], 0.057f, 100, r, g, b); //W
+//     drawCircle(XHouse1Smoke[4], YHouse1Smoke[4], 0.048f, 100, r, g, b); //Z
+//     drawCircle(XHouse1Smoke[5], YHouse1Smoke[5], 0.059f, 100, r, g, b); //A1
+//     drawCircle(XHouse1Smoke[6], YHouse1Smoke[6], 0.050f, 100, r, g, b); //B1
+//     drawCircle(XHouse1Smoke[7], YHouse1Smoke[7], 0.032f, 100, r, g, b); //C1
 
-    glPushMatrix();
-    glTranslatef(House1SmokeXposition, House1SmokeYposition, 0.0f);
-        glBegin(GL_POLYGON);
-        glVertex2f(0.753f, 0.105f); //T
-        glVertex2f(0.719f, 0.066f); //D1
-        glVertex2f(0.718f, 0.074f); //E1
-        glVertex2f(0.718f, 0.082f); //F1
-        glVertex2f(0.719f, 0.088f); //G1
-        glVertex2f(0.721f, 0.095f); //H1
-        glVertex2f(0.726f, 0.102f); //I1
-        glVertex2f(0.730f, 0.107f); //J1
-        glVertex2f(0.735f, 0.111f); //K1
-        glVertex2f(0.739f, 0.114f); //L1
-        glVertex2f(0.797f, 0.144f); //M1
-        glVertex2f(0.815f, 0.138f); //N1
-        glVertex2f(0.814f, 0.131f); //Z1
-        glVertex2f(0.810f, 0.131f); //A2
-        glVertex2f(0.811f, 0.131f); //B2
-        glVertex2f(0.809f, 0.129f); //C2
-        glVertex2f(0.807f, 0.128f); //D2
-        glVertex2f(0.805f, 0.127f); //E2
-        glVertex2f(0.804f, 0.125f); //F2
-        glVertex2f(0.802f, 0.122f); //G2
-        glVertex2f(0.801f, 0.119f); //H2
-        glVertex2f(0.799f, 0.116f); //I2
-        glVertex2f(0.798f, 0.112f); //J2
-        glVertex2f(0.797f, 0.108f); //K2
-        glVertex2f(0.795f, 0.104f); //L2
-        glVertex2f(0.793f, 0.101f); //M2
-        glVertex2f(0.791f, 0.097f); //N2
-        glVertex2f(0.788f, 0.092f); //O2
-        glVertex2f(0.784f, 0.092f); //P2
-        glVertex2f(0.780f, 0.090f); //Q2
-        glVertex2f(0.775f, 0.088f); //S2
-        glVertex2f(0.769f, 0.086f); //T2
-        glVertex2f(0.761f, 0.086f); //U2
-        glVertex2f(0.758f, 0.085f); //V2
-        glVertex2f(0.753f, 0.084f); //W2
-        glVertex2f(0.747f, 0.082f); //Z2
-        glVertex2f(0.743f, 0.080f); //A3
-        glVertex2f(0.738f, 0.077f); //B3
-        glVertex2f(0.733f, 0.074f); //C3
-        glVertex2f(0.729f, 0.071f); //D3
-        glVertex2f(0.726f, 0.070f); //E3
-        glVertex2f(0.723f, 0.068f); //F3
-        glVertex2f(0.719f, 0.066f); //D1
-        glEnd();
-    glPopMatrix();
+//     glPushMatrix();
+//     glTranslatef(House1SmokeXposition, House1SmokeYposition, 0.0f);
+//         glBegin(GL_POLYGON);
+//         glVertex2f(0.753f, 0.105f); //T
+//         glVertex2f(0.719f, 0.066f); //D1
+//         glVertex2f(0.718f, 0.074f); //E1
+//         glVertex2f(0.718f, 0.082f); //F1
+//         glVertex2f(0.719f, 0.088f); //G1
+//         glVertex2f(0.721f, 0.095f); //H1
+//         glVertex2f(0.726f, 0.102f); //I1
+//         glVertex2f(0.730f, 0.107f); //J1
+//         glVertex2f(0.735f, 0.111f); //K1
+//         glVertex2f(0.739f, 0.114f); //L1
+//         glVertex2f(0.797f, 0.144f); //M1
+//         glVertex2f(0.815f, 0.138f); //N1
+//         glVertex2f(0.814f, 0.131f); //Z1
+//         glVertex2f(0.810f, 0.131f); //A2
+//         glVertex2f(0.811f, 0.131f); //B2
+//         glVertex2f(0.809f, 0.129f); //C2
+//         glVertex2f(0.807f, 0.128f); //D2
+//         glVertex2f(0.805f, 0.127f); //E2
+//         glVertex2f(0.804f, 0.125f); //F2
+//         glVertex2f(0.802f, 0.122f); //G2
+//         glVertex2f(0.801f, 0.119f); //H2
+//         glVertex2f(0.799f, 0.116f); //I2
+//         glVertex2f(0.798f, 0.112f); //J2
+//         glVertex2f(0.797f, 0.108f); //K2
+//         glVertex2f(0.795f, 0.104f); //L2
+//         glVertex2f(0.793f, 0.101f); //M2
+//         glVertex2f(0.791f, 0.097f); //N2
+//         glVertex2f(0.788f, 0.092f); //O2
+//         glVertex2f(0.784f, 0.092f); //P2
+//         glVertex2f(0.780f, 0.090f); //Q2
+//         glVertex2f(0.775f, 0.088f); //S2
+//         glVertex2f(0.769f, 0.086f); //T2
+//         glVertex2f(0.761f, 0.086f); //U2
+//         glVertex2f(0.758f, 0.085f); //V2
+//         glVertex2f(0.753f, 0.084f); //W2
+//         glVertex2f(0.747f, 0.082f); //Z2
+//         glVertex2f(0.743f, 0.080f); //A3
+//         glVertex2f(0.738f, 0.077f); //B3
+//         glVertex2f(0.733f, 0.074f); //C3
+//         glVertex2f(0.729f, 0.071f); //D3
+//         glVertex2f(0.726f, 0.070f); //E3
+//         glVertex2f(0.723f, 0.068f); //F3
+//         glVertex2f(0.719f, 0.066f); //D1
+//         glEnd();
+//     glPopMatrix();
 
 
-}
+// }
 
 //Smoke
 void drawSmoke1()
@@ -3442,9 +3459,19 @@ void update(int value)
 {
 
     //cloud
-    if(cloudPosition > 1.0)
-        cloudPosition = -1.0f;
-    cloudPosition += cloudSpeed;
+    if(LeftCloudPosition > 1.0)
+        LeftCloudPosition = -1.0f;
+    LeftCloudPosition += LeftCloudSpeed;
+
+    //cloud
+    if(MiddleCloudPosition > 1.0)
+        MiddleCloudPosition = -1.0f;
+    MiddleCloudPosition += MiddleCloudSpeed;
+
+    //cloud
+    if(RightCloudPosition > 1.0)
+        RightCloudPosition = -1.0f;
+    RightCloudPosition += RightCloudSpeed;
 
 
     //Building 1 Smoke
@@ -3622,6 +3649,8 @@ void SceneInfoDisplay()
 
     renderBitmapString(-0.155f, 0.05f, 0.0f, GLUT_BITMAP_TIMES_ROMAN_24, "Ashes and Echoes");
     renderBitmapString(-0.17f, -0.05f, 0.0f, GLUT_BITMAP_HELVETICA_18, "Scene 4: Memory Pulse");
+
+
 
 
     glFlush(); // Render now
